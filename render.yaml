@@ -1,0 +1,21 @@
+# render.yaml
+services:
+  - type: web
+    name: nurse-triage-api
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nurse-triage-db
+          property: connectionString
+      - key: ADMIN_PASSWORD
+        value: admin123
+
+databases:
+  - name: nurse-triage-db
+    databaseName: nurse_triage
+    user: nurse_user

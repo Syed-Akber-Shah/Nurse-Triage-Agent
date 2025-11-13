@@ -1,0 +1,26 @@
+# Python Dependencies for Nurse Triage Agent
+
+# Latest Google Gen AI SDK
+google-genai>=1.0.0
+
+# Environment variables management
+python-dotenv>=1.0.0
+
+# FastAPI Backend Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# Database
+sqlalchemy>=2.0.0
+
+# Data validation
+pydantic>=2.0.0
+
+# SMS/Email notifications
+twilio>=8.0.0
+APScheduler>=3.10.0
+# python-multipart>=0.0.6
+
+# For PostgreSQL on Render
+psycopg2-binary>=2.9.0
+gunicorn>=21.0.0

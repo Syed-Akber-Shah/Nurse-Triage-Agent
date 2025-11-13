@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Nurse Triage Dashboard</title>
+    
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="app-header" id="main-header">
+        <h1 id="header-title">Agentic Triage Dashboard: P405</h1>
+        <div class="header-actions">
+            <button id="admin-btn" class="admin-button">Admin</button>
+            <div id="risk-status" class="risk-indicator RED">CRITICAL RISK</div>
+        </div>
+    </header>
+
+    <!-- <header class="app-header" id="main-header">
+        <h1 id="header-title">Agentic Triage Dashboard: P405</h1>
+        <div id="risk-status" class="risk-indicator RED">CRITICAL RISK</div>
+    </header> -->
+
+    <main class="dashboard-grid">
+        
+        <!-- Left Panel: Patient Context -->
+        <section class="context-panel">
+            <h2>Patient Context</h2>
+            <div class="card patient-info">
+                <p><strong>Patient ID:</strong> <span id="patient-id">P405</span> (Male, 68 yrs)</p>
+                <p><strong>Room/Bed:</strong> ICU 203</p>
+                <p><strong>Diagnosis:</strong> Post-MI (Heart Attack)</p>
+                <div class="alert-box-danger">
+                    <strong>⚠️ ALLERGIES:</strong> PENICILLIN (MUST READ!)
+                </div>
+            </div>
+            
+            <div class="card history-panel">
+                <h3>Active Protocols</h3>
+                <ul id="active-protocols">
+                    <li>Cardiogenic Shock Risk (P-SHOCK-A)</li>
+                    <li>Strict I/O Monitoring</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Center Panel: Triage & Vitals -->
+        <section class="triage-panel">
+            
+            <h2>🔴 Real-Time Vitals (<span id="vitals-time">Loading...</span>)</h2>
+            <div class="vitals-grid">
+                <div id="hr-tile" class="vital-tile RED">
+                    <p>Heart Rate (bpm)</p>
+                    <strong id="hr-value">--</strong>
+                </div>
+                <div id="bp-tile" class="vital-tile RED">
+                    <p>BP (mmHg)</p>
+                    <strong id="bp-value">--</strong>
+                </div>
+                <div id="temp-tile" class="vital-tile ORANGE">
+                    <p>Temperature (°F)</p>
+                    <strong id="temp-value">--</strong>
+                </div>
+            </div>
+
+            <h2>🧠 Agent Reasoning & Recommendation</h2>
+            <div id="ai-monologue" class="card ai-monologue-box">
+                <p id="reasoning-text"><strong>[ANALYZING...]</strong> Fetching patient data...</p>
+                <p id="recommendation-text"></p>
+                <div id="ai-action-status" class="alert-box-success" style="display:none;">
+                    <strong>AI Action:</strong> <span id="ai-action-detail"></span>
+                </div>
+            </div>
+
+            <h2>Human-in-the-Loop Actions</h2>
+            <div class="action-buttons">
+                <button class="btn-confirm" id="btn-confirm">✅ CONFIRM & PROCEED (EHR LOGGED)</button>
+                <button class="btn-override" id="btn-override">⚠️ OVERRIDE & ESCALATE TO SENIOR NURSE</button>
+            </div>
+        </section>
+
+        <!-- Right Panel: Audit & Documentation -->
+        <section class="audit-panel">
+            <h2>Audit & Documentation</h2>
+            
+            <div class="card audit-log">
+                <h3>Audit Log</h3>
+                <div id="log-container">
+                    <p>Initializing system...</p>
+                </div>
+            </div>
+
+            <div class="card quick-doc">
+                <h3>Quick Note</h3>
+                <textarea id="nurse-note" placeholder="Write Manual Observations"></textarea>
+                <button class="btn-document" id="btn-document">📝 DOCUMENT NOTE</button>
+            </div>
+        </section>
+
+    </main>
+
+    </main>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="admin-modal" class="admin-modal" style="display: none;">
+        <div class="admin-modal-content">
+            <span class="admin-close">&times;</span>
+            
+            <!-- Password Protection Screen -->
+            <div id="admin-password-screen" class="admin-section">
+                <h2>🔐 Admin Access</h2>
+                <p>Enter password to access Admin Panel</p>
+                <input type="password" id="admin-password" placeholder="Enter Password" class="admin-input">
+                <button id="admin-login-btn" class="admin-submit-btn">Login</button>
+            </div>
+
+            <!-- Admin Panel Form -->
+            <div id="admin-panel-form" class="admin-section" style="display: none;">
+                <h2>📋 Patient Registration Form</h2>
+                
+                <form id="patient-registration-form">
+                    
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h3>Personal Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="patient_id">Patient ID *</label>
+                                <input type="text" id="patient_id" name="patient_id" placeholder="e.g., P406" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="first_name">First Name *</label>
+                                <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Last Name *</label>
+                                <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date_of_birth">Date of Birth *</label>
+                                <input type="date" id="date_of_birth" name="date_of_birth" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender *</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="blood_group">Blood Group</label>
+                                <select id="blood_group" name="blood_group">
+                                    <option value="">Select Blood Group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hospital Information -->
+                    <div class="form-section">
+                        <h3>Hospital Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="room_number">Room Number *</label>
+                                <input type="text" id="room_number" name="room_number" placeholder="e.g., ICU 203" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bed_number">Bed Number</label>
+                                <input type="text" id="bed_number" name="bed_number" placeholder="e.g., B12">
+                            </div>
+                            <div class="form-group">
+                                <label for="admission_date">Admission Date *</label>
+                                <input type="datetime-local" id="admission_date" name="admission_date" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medical Information -->
+                    <div class="form-section">
+                        <h3>Medical Information</h3>
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="diagnosis">Diagnosis *</label>
+                                <textarea id="diagnosis" name="diagnosis" rows="3" placeholder="e.g., Post-MI (Myocardial Infarction)" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Vital Signs -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="heart_rate">Heart Rate (bpm) *</label>
+                                <input type="number" id="heart_rate" name="heart_rate" placeholder="e.g., 75" min="20" max="250" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="blood_pressure">BP (mmHg) *</label>
+                                <input type="text" id="blood_pressure" name="blood_pressure" placeholder="e.g., 120/80" pattern="\d{2,3}/\d{2,3}" required>
+                                <small>Format: Systolic/Diastolic (e.g., 120/80)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="temperature">Temperature (°F) *</label>
+                                <input type="number" id="temperature" name="temperature" placeholder="e.g., 98.6" step="0.1" min="90" max="110" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="allergies">Allergies (comma separated)</label>
+                                <input type="text" id="allergies" name="allergies" placeholder="e.g., Penicillin, Aspirin, Latex">
+                                <small>Separate multiple allergies with commas</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact -->
+                    <div class="form-section">
+                        <h3>Emergency Contact</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emergency_name">Contact Name</label>
+                                <input type="text" id="emergency_name" name="emergency_name" placeholder="Contact Person Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="emergency_relation">Relation</label>
+                                <input type="text" id="emergency_relation" name="emergency_relation" placeholder="e.g., Wife, Son">
+                            </div>
+                            <div class="form-group">
+                                <label for="emergency_phone">Phone Number</label>
+                                <input type="tel" id="emergency_phone" name="emergency_phone" placeholder="+92-300-1234567">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="admin-submit-btn">✅ Register Patient</button>
+                        <button type="button" id="admin-cancel-btn" class="admin-cancel-btn">❌ Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Link to external JavaScript file -->
+    <script src="app.js"></script>
+    
+    <!-- Link to external JavaScript file -->
+    <!-- <script src="app.js"></script> -->
+</body>
+</html>

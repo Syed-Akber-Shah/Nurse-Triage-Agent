@@ -1,0 +1,851 @@
+/* ============================================
+   NURSE TRIAGE DASHBOARD - STYLESHEET
+   ============================================ */
+
+/* --- Global Reset & Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Critical Blinking Animation for Alerts */
+@keyframes criticalBlink {
+    0%, 100% { 
+        background-color: #d9534f; 
+        box-shadow: 0 0 20px rgba(217, 83, 79, 0.8);
+    }
+    50% { 
+        background-color: #ff0000; 
+        box-shadow: 0 0 40px rgba(255, 0, 0, 1);
+    }
+}
+
+/* Fade In Animation for Log Entries */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse Animation for Critical Status */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Loading Spinner Animation */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.critical-alert {
+    animation: criticalBlink 1s infinite, pulse 2s infinite;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+.app-header {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-bottom: 5px solid #d9534f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+    font-size: 1.8em;
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+.risk-indicator {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1em;
+    color: white;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 150px;
+}
+
+/* Risk Level Colors */
+.risk-indicator.RED { 
+    background-color: #d9534f; 
+}
+
+.risk-indicator.ORANGE { 
+    background-color: #f0ad4e; 
+}
+
+.risk-indicator.GREEN { 
+    background-color: #28a745; 
+}
+
+/* ============================================
+   DASHBOARD GRID LAYOUT
+   ============================================ */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   CARD COMPONENTS
+   ============================================ */
+
+.card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h2, h3 {
+    color: #0d6efd;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 8px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.4em;
+}
+
+h3 {
+    font-size: 1.1em;
+    color: #495057;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+/* ============================================
+   VITALS SECTION
+   ============================================ */
+
+.vitals-grid {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.vital-tile {
+    flex: 1;
+    text-align: center;
+    padding: 25px 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.vital-tile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.vital-tile p {
+    margin: 0 0 5px 0;
+    font-size: 0.9em;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.vital-tile strong {
+    display: block;
+    font-size: 2.8em;
+    margin-top: 5px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* Vital Tile Colors */
+.vital-tile.RED {
+    background: linear-gradient(135deg, #d9534f 0%, #c9302c 100%);
+}
+
+.vital-tile.ORANGE {
+    background: linear-gradient(135deg, #f0ad4e 0%, #ec971f 100%);
+}
+
+.vital-tile.GREEN {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+}
+
+/* ============================================
+   ALERT BOXES
+   ============================================ */
+
+.alert-box-danger,
+.alert-box-success {
+    padding: 12px 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 0.95em;
+}
+
+.alert-box-danger {
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+    border-left: 4px solid #d9534f;
+}
+
+.alert-box-success {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+    border-left: 4px solid #28a745;
+}
+
+.ai-monologue-box {
+    border-left: 5px solid #0d6efd;
+    font-style: italic;
+    background-color: #e6f7ff;
+    padding: 15px;
+}
+
+.ai-monologue-box p {
+    margin-bottom: 8px;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.action-buttons button {
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.action-buttons button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-confirm {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #218838;
+}
+
+.btn-override {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.btn-override:hover {
+    background-color: #e0a800;
+}
+
+.btn-document {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn-document:hover {
+    background-color: #0b5ed7;
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 2px solid #ced4da;
+    border-radius: 5px;
+    resize: vertical;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+textarea::placeholder {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* ============================================
+   PATIENT INFO & HISTORY
+   ============================================ */
+
+.patient-info p {
+    margin-bottom: 8px;
+}
+
+.patient-info strong {
+    color: #495057;
+}
+
+.history-panel ul {
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+.history-panel li {
+    padding: 8px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.history-panel li:last-child {
+    border-bottom: none;
+}
+
+/* ============================================
+   AUDIT LOG
+   ============================================ */
+
+.audit-log {
+    max-height: 400px;
+}
+
+#log-container {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+#log-container p {
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    background-color: #f8f9fa;
+    border-left: 3px solid #0d6efd;
+    border-radius: 3px;
+    font-size: 0.9em;
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Custom Scrollbar for Audit Log */
+#log-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#log-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#log-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+#log-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ============================================
+   LOADING SPINNER
+   ============================================ */
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - MEDIA QUERIES
+   ============================================ */
+
+/* --- Tablets and Medium Screens (768px - 1199px) --- */
+@media (max-width: 1199px) {
+    .dashboard-grid {
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas: 
+            "main main"
+            "context audit";
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .triage-panel { 
+        grid-area: main; 
+    }
+    
+    .context-panel { 
+        grid-area: context; 
+    }
+    
+    .audit-panel { 
+        grid-area: audit; 
+    }
+    
+    .vitals-grid {
+        flex-wrap: wrap;
+    }
+
+    .vital-tile {
+        min-width: calc(50% - 10px);
+    }
+}
+
+/* --- Mobile Phones (Max 767px) --- */
+@media (max-width: 767px) {
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    
+    .app-header h1 {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+    }
+
+    .risk-indicator {
+        font-size: 0.9em;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    /* Mobile Order: Triage > Context > Audit */
+    .triage-panel { 
+        order: 1; 
+    }
+    
+    .context-panel { 
+        order: 2; 
+    }
+    
+    .audit-panel { 
+        order: 3; 
+    }
+
+    .vitals-grid {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .vital-tile {
+        width: 100%;
+        padding: 20px 15px;
+    }
+
+    .vital-tile strong {
+        font-size: 2.2em;
+    }
+
+    .action-buttons button {
+        padding: 12px 15px;
+        font-size: 0.95em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    h3 {
+        font-size: 1em;
+    }
+}
+
+/* --- Very Small Screens (Max 480px) --- */
+@media (max-width: 480px) {
+    .app-header h1 {
+        font-size: 1.1em;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .vital-tile strong {
+        font-size: 2em;
+    }
+
+    textarea {
+        min-height: 80px;
+        font-size: 0.9em;
+    }
+
+    /* ============================================
+   ADMIN BUTTON & HEADER ACTIONS
+   ============================================ */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-button {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-button:hover {
+    background-color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.admin-button:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   ADMIN PANEL MODAL
+   ============================================ */
+
+.admin-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+.admin-modal-content {
+    background-color: #ffffff;
+    margin: 2% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.4s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.admin-close {
+    color: #aaa;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.admin-close:hover,
+.admin-close:focus {
+    color: #000;
+}
+
+.admin-section h2 {
+    color: #000000;
+    border-bottom: 3px solid #0d6efd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.6em;
+}
+
+/* ============================================
+   PASSWORD SCREEN
+   ============================================ */
+
+#admin-password-screen {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#admin-password-screen p {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.admin-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+}
+
+.admin-input:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+.admin-hint {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #999;
+}
+
+.admin-hint code {
+    background-color: #f4f4f4;
+    padding: 3px 8px;
+    border-radius: 3px;
+    color: #d9534f;
+    font-weight: bold;
+}
+
+/* ============================================
+   ADMIN FORM
+   ============================================ */
+
+.form-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border-left: 4px solid #0d6efd;
+}
+
+.form-section h3 {
+    color: #0d6efd;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 8px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+.form-group.full-width {
+    flex: 1 1 100%;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 0.85em;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #adb5bd;
+}
+
+/* ============================================
+   FORM ACTIONS
+   ============================================ */
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #dee2e6;
+}
+
+.admin-submit-btn,
+.admin-cancel-btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-submit-btn {
+    background-color: #28a745;
+    color: white;
+    box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+}
+
+.admin-submit-btn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.admin-cancel-btn {
+    background-color: #6c757d;
+    color: white;
+    box-shadow: 0 3px 10px rgba(108, 117, 125, 0.3);
+}
+
+.admin-cancel-btn:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+/* ============================================
+   RESPONSIVE ADMIN PANEL
+   ============================================ */
+
+@media (max-width: 768px) {
+    .admin-modal-content {
+        width: 95%;
+        margin: 5% auto;
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        min-width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .admin-submit-btn,
+    .admin-cancel-btn {
+        width: 100%;
+    }
+
+    .header-actions {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .admin-button {
+        width: 100%;
+    }
+}
+}
