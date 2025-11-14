@@ -11,7 +11,7 @@ import os
 # Database URL (SQLite for development, easy to switch to PostgreSQL)
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./nurse_triage.db')
 
-# Fix for Render PostgreSQL URL
+# Fix for Deployment PostgreSQL URL
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 

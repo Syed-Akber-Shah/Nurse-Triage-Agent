@@ -21,6 +21,6 @@ twilio>=8.0.0
 APScheduler>=3.10.0
 # python-multipart>=0.0.6
 
-# For PostgreSQL on Render
+# Database/PostGreSQL (for deployment)
 psycopg2-binary>=2.9.0
 gunicorn>=21.0.0
