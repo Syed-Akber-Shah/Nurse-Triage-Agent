@@ -1,4 +1,4 @@
-```
+<!-- ```
 .env
 .env.*
 __pycache__/
@@ -11,4 +11,16 @@ node_modules/
 *.log
 README.md
 .vscode/
-.idea/
+.idea/ -->
+
+echo ".env
+.env.*
+__pycache__/
+*.pyc
+*.db
+.git/
+node_modules/
+.DS_Store
+*.log
+.vscode/
+README.md" > .dockerignore
