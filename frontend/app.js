@@ -9,7 +9,8 @@
 // ============================================
 
 const CONFIG = {
-    API_BASE_URL: 'http://localhost:8000',
+    API_BASE_URL: 'https://web-production-523cb.up.railway.app/',
+    // API_BASE_URL: 'http://localhost:8000',
     CURRENT_PATIENT_ID: 'P405',
     VITALS_REFRESH_INTERVAL: 30000,
     LOG_MAX_ENTRIES: 10,
