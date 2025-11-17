@@ -19,13 +19,36 @@
 
 
 # ----- Base Image -----
+# FROM python:3.10-slim
+
+# # ----- Working Directory Set -----
+# WORKDIR /app
+
+# # ----- Copy Requirements -----
+# COPY requirements.txt .
+
+# # ----- Install Dependencies -----
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# # ----- Copy All Project Files -----
+# COPY . .
+
+# # ----- Expose Railway PORT (But value runtime pe milti hai) -----
+# EXPOSE 8000
+
+# # ----- Start Command (MOST IMPORTANT FIX) -----
+# # CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+
+
+# ----- Base Image -----
 FROM python:3.10-slim
 
-# ----- Working Directory Set -----
+# ----- Working Directory -----
 WORKDIR /app
 
 # ----- Copy Requirements -----
-COPY requirements.txt .
+COPY backend/requirements.txt .
 
 # ----- Install Dependencies -----
 RUN pip install --no-cache-dir -r requirements.txt
@@ -33,9 +56,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # ----- Copy All Project Files -----
 COPY . .
 
-# ----- Expose Railway PORT (But value runtime pe milti hai) -----
+# ----- Expose default port -----
 EXPOSE 8000
 
-# ----- Start Command (MOST IMPORTANT FIX) -----
-# CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# ----- Start Command -----
 CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
