@@ -1,0 +1,42 @@
+Folder PATH listing for volume New Volume
+Volume serial number is 0E52-5509
+E:.
+³   .dockerignore
+³   .gitignore
+³   Dockerfile
+³   fly.toml
+³   Procfile
+³   railway.json
+³   README.md
+³   render.yaml
+³   structure.txt
+³   
+ÃÄÄÄbackend
+³   ³   .env
+³   ³   agent.py
+³   ³   config.py
+³   ³   database.py
+³   ³   main.py
+³   ³   models.py
+³   ³   notifications.py
+³   ³   nurse_triage.db
+³   ³   requirements.txt
+³   ³   runtime.txt
+³   ³   scheduler.py
+³   ³   start.py
+³   ³   __init__.py
+³   ³   
+³   ÀÄÄÄ__pycache__
+³           agent.cpython-313.pyc
+³           config.cpython-313.pyc
+³           database.cpython-313.pyc
+³           main.cpython-313.pyc
+³           models.cpython-313.pyc
+³           notifications.cpython-313.pyc
+³           
+ÀÄÄÄfrontend
+    ³   app.js
+    ³   index.html
+    ³   styles.css
+    ³   
+    ÀÄÄÄassets

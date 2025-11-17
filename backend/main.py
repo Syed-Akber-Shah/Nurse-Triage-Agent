@@ -56,13 +56,6 @@ app.add_middleware(
 # Initialize AI Agent
 agent = NurseAgent()
 
-# Update FastAPI app initialization
-app = FastAPI(
-    title=settings.API_TITLE,
-    version=settings.API_VERSION,
-    description=settings.API_DESCRIPTION,
-    lifespan=lifespan  # Add this line
-)
 # ============================================
 # Pydantic Models (Request/Response schemas)
 # ============================================
@@ -522,6 +515,6 @@ async def notification_status():
         "scheduled_jobs": len(reminder_scheduler.scheduler.get_jobs())
     }
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
