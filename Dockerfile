@@ -41,23 +41,34 @@
 # CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
 
 
-# ----- Base Image -----
+# # ----- Base Image -----
+# FROM python:3.10-slim
+
+# # ----- Working Directory -----
+# WORKDIR /app
+
+# # ----- Copy Requirements -----
+# COPY backend/requirements.txt .
+
+# # ----- Install Dependencies -----
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# # ----- Copy All Project Files -----
+# COPY . .
+
+# # ----- Expose default port -----
+# EXPOSE 8000
+
+# # ----- Start Command -----
+# CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+
 FROM python:3.10-slim
-
-# ----- Working Directory -----
 WORKDIR /app
-
-# ----- Copy Requirements -----
+COPY backend/ backend/
 COPY backend/requirements.txt .
 
-# ----- Install Dependencies -----
 RUN pip install --no-cache-dir -r requirements.txt
 
-# ----- Copy All Project Files -----
-COPY . .
-
-# ----- Expose default port -----
 EXPOSE 8000
 
-# ----- Start Command -----
 CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
